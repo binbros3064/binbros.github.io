@@ -323,6 +323,51 @@
   }
   .text-input::placeholder{color:rgba(246,247,242,0.35);}
   .text-input:focus{outline:none; border-color:var(--lime);}
+  .text-input.error{border-color:#e0724a;}
+  .field-hint{
+    margin:6px 2px 0;
+    font-size:11.5px;
+    color:rgba(246,247,242,0.4);
+  }
+  .form-error{
+    margin:14px 0 0;
+    padding:10px 14px;
+    background:rgba(224,114,74,0.12);
+    border:1px solid rgba(224,114,74,0.4);
+    border-radius:9px;
+    color:#f0a487;
+    font-size:13px;
+    font-weight:600;
+    display:none;
+  }
+  .form-error.show{display:block;}
+  .booking-confirm{
+    margin:14px 0 0;
+    padding:14px 16px;
+    background:rgba(155,208,51,0.1);
+    border:1px solid rgba(155,208,51,0.4);
+    border-radius:9px;
+    display:none;
+  }
+  .booking-confirm.show{display:block;}
+  .booking-confirm .ref-label{
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:rgba(246,247,242,0.6);
+    font-weight:700;
+  }
+  .booking-confirm .ref-number{
+    font-family:'Archivo Black', sans-serif;
+    font-size:24px;
+    color:var(--lime);
+    margin:4px 0 6px;
+  }
+  .booking-confirm .ref-note{
+    font-size:12.5px;
+    color:rgba(246,247,242,0.75);
+    line-height:1.4;
+  }
   .total-row{
     display:flex;
     justify-content:space-between;
@@ -338,6 +383,7 @@
     color:var(--lime);
   }
   #onceOffOptions.hidden{display:none;}
+  .hidden{display:none;}
 
   /* ---------- SOCIALS ---------- */
   .socials{
@@ -415,7 +461,7 @@
   </div>
 
   <div class="actions">
-    <button class="btn btn-primary" onclick="saveContact()">＋ Save to Contacts</button>
+    <button class="btn btn-primary" id="saveContactBtn">＋ Save to Contacts</button>
     <a class="btn btn-secondary" href="tel:0451666162">Call 0451 666 162</a>
     <a class="btn btn-secondary" href="tel:0480645874">Call 0480 645 874</a>
     <a class="btn btn-secondary" href="mailto:binbros3064@gmail.com">Email binbros3064@gmail.com</a>
@@ -433,9 +479,10 @@
   <div class="section">
     <p class="section-label">🗑 Garbage Bin (Red Lid)</p>
     <div class="prices">
-      <div class="price-row"><span class="label">80L bin</span><span class="amount">$25</span></div>
+      <div class="price-row"><span class="label">80L bin</span><span class="amount">$20</span></div>
       <div class="price-row"><span class="label">140L bin</span><span class="amount">$25</span></div>
-      <div class="price-row highlight"><span class="label">2 garbage bins together</span><span class="amount">$45</span></div>
+      <div class="price-row"><span class="label">240L bin</span><span class="amount">$30</span></div>
+      <div class="price-row highlight"><span class="label">2nd garbage bin (same visit)</span><span class="amount">-$5</span></div>
     </div>
   </div>
 
@@ -452,7 +499,7 @@
     <div class="prices">
       <div class="price-row highlight"><span class="label">1 garbage + 1 recycling</span><span class="amount">$35</span></div>
     </div>
-    <p class="cash-note">Combo price is for standard sizes (80L/140L garbage + 140L recycling). Add $5 if the recycling bin is 240L.</p>
+    <p class="cash-note">Combo price is for a standard garbage bin (80L/140L) + 140L recycling. Add $5 if the garbage bin is 240L. Add $5 if the recycling bin is 240L.</p>
   </div>
 
   <div class="section payment-section">
@@ -461,6 +508,7 @@
       <div class="payment-pill">💵 Cash</div>
       <div class="payment-pill">📱 PayID</div>
     </div>
+    <p class="cash-note">Paying via PayID? Please include your booking number as the payment reference — you'll get this number when you request a booking below.</p>
   </div>
 
   <div class="section">
@@ -492,11 +540,19 @@
 
       <div id="onceOffOptions">
         <label class="field-label">Garbage bins (red lid)</label>
-        <div class="option-row" id="garbageRow">
-          <button type="button" class="option-btn active" data-garbage="0">None</button>
-          <button type="button" class="option-btn" data-garbage="1" data-size="80L">1 bin (80L)</button>
-          <button type="button" class="option-btn" data-garbage="1" data-size="140L">1 bin (140L)</button>
-          <button type="button" class="option-btn" data-garbage="2">2 bins</button>
+        <div class="option-row" id="garbageSizeRow">
+          <button type="button" class="option-btn active" data-garbage-size="none">None</button>
+          <button type="button" class="option-btn" data-garbage-size="80L">80L</button>
+          <button type="button" class="option-btn" data-garbage-size="140L">140L</button>
+          <button type="button" class="option-btn" data-garbage-size="240L">240L</button>
+        </div>
+
+        <div id="garbageQtyWrap" class="hidden">
+          <label class="field-label">How many garbage bins?</label>
+          <div class="option-row" id="garbageQtyRow">
+            <button type="button" class="option-btn active" data-garbage-qty="1">1 bin</button>
+            <button type="button" class="option-btn" data-garbage-qty="2">2 bins (-$5 off 2nd)</button>
+          </div>
         </div>
 
         <label class="field-label">Recycling bin (yellow lid)</label>
@@ -514,10 +570,11 @@
       </div>
 
       <label class="field-label">Your name</label>
-      <input type="text" id="custName" class="text-input" placeholder="Full name">
+      <input type="text" id="custName" class="text-input" placeholder="Full name" autocomplete="name" required>
 
       <label class="field-label">Address / suburb</label>
-      <input type="text" id="custAddress" class="text-input" placeholder="e.g. 12 Smith St, Kalkallo">
+      <input type="text" id="custAddress" class="text-input" placeholder="e.g. 12 Smith St, Kalkallo" autocomplete="street-address" required>
+      <p class="field-hint" id="addressHint">Start typing — your phone should suggest your saved address.</p>
 
       <label class="field-label">Payment method</label>
       <div class="option-row" id="paymentRow">
@@ -530,8 +587,14 @@
         <span class="total-amount" id="totalAmount">$0</span>
       </div>
 
-      <button class="btn btn-primary" id="bookBtn" onclick="sendBooking()">Request Booking →</button>
+      <button class="btn btn-primary" id="bookBtn">Request Booking →</button>
       <p class="cash-note">Tapping "Request Booking" opens a text message to Bin Bros with your details — nothing is charged here.</p>
+      <p class="form-error" id="formError">Please fill in your name and address before requesting a booking.</p>
+      <div class="booking-confirm" id="bookingConfirm">
+        <p class="ref-label">Your booking number</p>
+        <p class="ref-number" id="refNumber">—</p>
+        <p class="ref-note">Save this number — if you're paying via PayID, include it as the payment reference so we can match your payment to your booking.</p>
+      </div>
     </div>
   </div>
 
@@ -566,6 +629,8 @@
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function(){
+
 function saveContact(){
   const vcard = [
     "BEGIN:VCARD",
@@ -589,11 +654,18 @@ function saveContact(){
   URL.revokeObjectURL(url);
 }
 
+document.getElementById("saveContactBtn").addEventListener("click", saveContact);
+
 /* ---------- BOOKING FORM ---------- */
+const GARBAGE_PRICE = { "80L": 20, "140L": 25, "240L": 30 };
+const RECYCLING_PRICE = { "140": 20, "240": 25 };
+const SECOND_BIN_DISCOUNT = 5;
+const COMBO_BASE = 35;
+
 let bookingState = {
   service: "onceoff",
-  garbage: 0,
-  garbageSize: "",
+  garbageSize: "none",
+  garbageQty: 1,
   recycling: "none",
   soiled: 0,
   payment: "Cash"
@@ -613,12 +685,27 @@ document.getElementById("serviceTypeRow").addEventListener("click", e => {
   updateTotal();
 });
 
-document.getElementById("garbageRow").addEventListener("click", e => {
+document.getElementById("garbageSizeRow").addEventListener("click", e => {
   const btn = e.target.closest(".option-btn");
   if(!btn) return;
-  setActive(document.getElementById("garbageRow"), btn);
-  bookingState.garbage = parseInt(btn.dataset.garbage, 10);
-  bookingState.garbageSize = btn.dataset.size || "";
+  setActive(document.getElementById("garbageSizeRow"), btn);
+  bookingState.garbageSize = btn.dataset.garbageSize;
+
+  const qtyWrap = document.getElementById("garbageQtyWrap");
+  const hasSize = bookingState.garbageSize !== "none";
+  qtyWrap.classList.toggle("hidden", !hasSize);
+  if(!hasSize){
+    bookingState.garbageQty = 1;
+    setActive(document.getElementById("garbageQtyRow"), document.querySelector('[data-garbage-qty="1"]'));
+  }
+  updateTotal();
+});
+
+document.getElementById("garbageQtyRow").addEventListener("click", e => {
+  const btn = e.target.closest(".option-btn");
+  if(!btn) return;
+  setActive(document.getElementById("garbageQtyRow"), btn);
+  bookingState.garbageQty = parseInt(btn.dataset.garbageQty, 10);
   updateTotal();
 });
 
@@ -650,16 +737,23 @@ function calcTotal(){
     return 130;
   }
   let total = 0;
-  const g = bookingState.garbage;
+  const hasGarbage = bookingState.garbageSize !== "none";
   const r = bookingState.recycling;
 
-  if(g === 1 && r !== "none"){
-    total = 35 + (r === "240" ? 5 : 0);
+  if(hasGarbage && bookingState.garbageQty === 1 && r !== "none"){
+    // combo: 1 garbage + 1 recycling
+    total = COMBO_BASE;
+    if(bookingState.garbageSize === "240L") total += 5;
+    if(r === "240") total += 5;
   } else {
-    if(g === 1) total += 25;
-    if(g === 2) total += 45;
-    if(r === "140") total += 20;
-    if(r === "240") total += 25;
+    if(hasGarbage){
+      const unitPrice = GARBAGE_PRICE[bookingState.garbageSize];
+      total += bookingState.garbageQty === 2
+        ? (unitPrice * 2 - SECOND_BIN_DISCOUNT)
+        : unitPrice;
+    }
+    if(r === "140") total += RECYCLING_PRICE["140"];
+    if(r === "240") total += RECYCLING_PRICE["240"];
   }
   if(bookingState.soiled === 1) total += 5;
   return total;
@@ -669,18 +763,43 @@ function updateTotal(){
   document.getElementById("totalAmount").textContent = "$" + calcTotal();
 }
 
+function generateBookingRef(){
+  const now = new Date();
+  const y = String(now.getFullYear()).slice(-2);
+  const m = String(now.getMonth()+1).padStart(2,"0");
+  const d = String(now.getDate()).padStart(2,"0");
+  const rand = Math.floor(100 + Math.random()*900); // 3-digit random
+  return "BB-" + y + m + d + "-" + rand;
+}
+
 function sendBooking(){
-  const name = document.getElementById("custName").value.trim();
-  const address = document.getElementById("custAddress").value.trim();
+  const nameInput = document.getElementById("custName");
+  const addressInput = document.getElementById("custAddress");
+  const name = nameInput.value.trim();
+  const address = addressInput.value.trim();
+  const formError = document.getElementById("formError");
+  const bookingConfirm = document.getElementById("bookingConfirm");
+
+  nameInput.classList.toggle("error", !name);
+  addressInput.classList.toggle("error", !address);
+
+  if(!name || !address){
+    formError.classList.add("show");
+    bookingConfirm.classList.remove("show");
+    (name ? addressInput : nameInput).focus();
+    return;
+  }
+  formError.classList.remove("show");
+
+  const bookingRef = generateBookingRef();
   const total = calcTotal();
 
   let details = [];
   if(bookingState.service === "monthly"){
     details.push("Monthly plan (weekly, both bins)");
   } else {
-    if(bookingState.garbage > 0){
-      const sizeLabel = bookingState.garbageSize ? " (" + bookingState.garbageSize + ")" : "";
-      details.push(bookingState.garbage + " garbage bin(s)" + sizeLabel);
+    if(bookingState.garbageSize !== "none"){
+      details.push(bookingState.garbageQty + " garbage bin(s) (" + bookingState.garbageSize + ")");
     }
     if(bookingState.recycling !== "none") details.push("Recycling bin " + bookingState.recycling + "L");
     if(bookingState.soiled === 1) details.push("Heavily soiled surcharge");
@@ -688,17 +807,32 @@ function sendBooking(){
 
   const msg =
     "Hi Bin Bros, I'd like to book a clean.\n" +
-    "Name: " + (name || "-") + "\n" +
-    "Address: " + (address || "-") + "\n" +
+    "Booking #: " + bookingRef + "\n" +
+    "Name: " + name + "\n" +
+    "Address: " + address + "\n" +
     "Service: " + details.join(", ") + "\n" +
-    "Payment: " + bookingState.payment + "\n" +
+    "Payment: " + bookingState.payment + (bookingState.payment === "PayID" ? " (ref: " + bookingRef + ")" : "") + "\n" +
     "Estimated total: $" + total;
+
+  document.getElementById("refNumber").textContent = bookingRef;
+  bookingConfirm.classList.add("show");
 
   const smsUrl = "sms:0451666162?body=" + encodeURIComponent(msg);
   window.location.href = smsUrl;
 }
 
+document.getElementById("bookBtn").addEventListener("click", sendBooking);
+
+document.getElementById("custName").addEventListener("input", function(){
+  this.classList.remove("error");
+});
+document.getElementById("custAddress").addEventListener("input", function(){
+  this.classList.remove("error");
+});
+
 updateTotal();
+
+});
 </script>
 
 </body>
