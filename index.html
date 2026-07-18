@@ -572,6 +572,9 @@
       <label class="field-label">Your name</label>
       <input type="text" id="custName" class="text-input" placeholder="Full name" autocomplete="name" required>
 
+      <label class="field-label">Phone number</label>
+      <input type="tel" id="custPhone" class="text-input" placeholder="e.g. 0412 345 678" autocomplete="tel" required>
+
       <label class="field-label">Address / suburb</label>
       <input type="text" id="custAddress" class="text-input" placeholder="e.g. 12 Smith St, Kalkallo" autocomplete="street-address" required>
       <p class="field-hint" id="addressHint">Start typing — your phone should suggest your saved address.</p>
@@ -772,27 +775,90 @@ function generateBookingRef(){
   return "BB-" + y + m + d + "-" + rand;
 }
 
+/* ---------- GOOGLE FORM AUTO-SUBMIT (records every booking) ---------- */
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf_63KoCAn02iKX8Dh0K3f_2uSrNE37WEjr8LPhiaoSzmWq2g/formResponse";
+
+const FORM_ENTRY = {
+  name: "entry.388792596",
+  address: "entry.2002745545",
+  service: "entry.1264809587",
+  garbageSize: "entry.1671206354",
+  garbageQty: "entry.1741186613",
+  recycling: "entry.2099254424",
+  soiled: "entry.871098841",
+  payment: "entry.547685116",
+  phone: "entry.1591967525"
+};
+
+const SERVICE_LABEL = {
+  onceoff: "One-off clean",
+  monthly: "Monthly plan — $130/month"
+};
+const GARBAGE_SIZE_LABEL = {
+  none: "None",
+  "80L": "80L — $20",
+  "140L": "140L — $25",
+  "240L": "240L — $30"
+};
+const GARBAGE_QTY_LABEL = {
+  1: "1 bin",
+  2: "2 bins (2nd bin -$5)"
+};
+const RECYCLING_LABEL = {
+  none: "None",
+  "140": "140L — $20",
+  "240": "240L — $25"
+};
+const SOILED_LABEL = {
+  0: "Normal",
+  1: "Heavily soiled (+$5)"
+};
+
+function submitToGoogleForm(state, name, address, phone, bookingRef){
+  const data = new FormData();
+  data.append(FORM_ENTRY.name, name + " (Ref: " + bookingRef + ")");
+  data.append(FORM_ENTRY.address, address);
+  data.append(FORM_ENTRY.service, SERVICE_LABEL[state.service]);
+  if(state.service !== "monthly"){
+    data.append(FORM_ENTRY.garbageSize, GARBAGE_SIZE_LABEL[state.garbageSize]);
+    data.append(FORM_ENTRY.garbageQty, GARBAGE_QTY_LABEL[state.garbageQty]);
+    data.append(FORM_ENTRY.recycling, RECYCLING_LABEL[state.recycling]);
+    data.append(FORM_ENTRY.soiled, SOILED_LABEL[state.soiled]);
+  }
+  data.append(FORM_ENTRY.payment, state.payment);
+  data.append(FORM_ENTRY.phone, phone);
+
+  // no-cors: we can't read the response, but the submission still goes through
+  fetch(GOOGLE_FORM_URL, { method: "POST", mode: "no-cors", body: data })
+    .catch(() => { /* silently ignore — SMS is still the reliable fallback */ });
+}
+
 function sendBooking(){
   const nameInput = document.getElementById("custName");
+  const phoneInput = document.getElementById("custPhone");
   const addressInput = document.getElementById("custAddress");
   const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
   const address = addressInput.value.trim();
   const formError = document.getElementById("formError");
   const bookingConfirm = document.getElementById("bookingConfirm");
 
   nameInput.classList.toggle("error", !name);
+  phoneInput.classList.toggle("error", !phone);
   addressInput.classList.toggle("error", !address);
 
-  if(!name || !address){
+  if(!name || !phone || !address){
     formError.classList.add("show");
     bookingConfirm.classList.remove("show");
-    (name ? addressInput : nameInput).focus();
+    (name ? (phone ? addressInput : phoneInput) : nameInput).focus();
     return;
   }
   formError.classList.remove("show");
 
   const bookingRef = generateBookingRef();
   const total = calcTotal();
+
+  submitToGoogleForm(bookingState, name, address, phone, bookingRef);
 
   let details = [];
   if(bookingState.service === "monthly"){
@@ -809,6 +875,7 @@ function sendBooking(){
     "Hi Bin Bros, I'd like to book a clean.\n" +
     "Booking #: " + bookingRef + "\n" +
     "Name: " + name + "\n" +
+    "Phone: " + phone + "\n" +
     "Address: " + address + "\n" +
     "Service: " + details.join(", ") + "\n" +
     "Payment: " + bookingState.payment + (bookingState.payment === "PayID" ? " (ref: " + bookingRef + ")" : "") + "\n" +
@@ -824,6 +891,9 @@ function sendBooking(){
 document.getElementById("bookBtn").addEventListener("click", sendBooking);
 
 document.getElementById("custName").addEventListener("input", function(){
+  this.classList.remove("error");
+});
+document.getElementById("custPhone").addEventListener("input", function(){
   this.classList.remove("error");
 });
 document.getElementById("custAddress").addEventListener("input", function(){
