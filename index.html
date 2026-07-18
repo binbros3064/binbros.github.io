@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bin Bros — Fresh Bins. Happy Homes.</title>
+<meta name="description" content="Residential bin cleaning in Kalkallo, VIC. High-pressure wash, sanitised, eco-friendly. Weekends 10am-4pm. Book your clean today.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+<!-- Social preview (shows up when the link is shared/pasted) -->
+<meta property="og:title" content="Bin Bros — Fresh Bins. Happy Homes.">
+<meta property="og:description" content="Residential bin cleaning in Kalkallo, VIC. Book your clean today.">
+<meta property="og:image" content="social-preview.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bin Bros — Fresh Bins. Happy Homes.">
+<meta name="twitter:description" content="Residential bin cleaning in Kalkallo, VIC. Book your clean today.">
+<meta name="twitter:image" content="social-preview.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  :root{
+    --navy:#0d1b2a;
+    --navy-deep:#081220;
+    --lime:#9bd033;
+    --lime-deep:#7cb01f;
+    --paper:#f6f7f2;
+    --ink:#0d1b2a;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--navy-deep);
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  .card{
+    width:100%;
+    max-width:460px;
+    min-height:100vh;
+    background:var(--navy);
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:44px 28px 30px;
+    background:
+      radial-gradient(circle at 85% -10%, rgba(155,208,51,0.18), transparent 55%),
+      var(--navy);
+    border-bottom:3px solid var(--lime);
+  }
+  .droplet{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(155,208,51,0.5);
+    filter:blur(0.5px);
+    animation:fall 2.6s ease-in forwards;
+    opacity:0;
+  }
+  @keyframes fall{
+    0%{opacity:0; transform:translateY(-20px) scale(0.6);}
+    15%{opacity:1;}
+    85%{opacity:0.9;}
+    100%{opacity:0; transform:translateY(160px) scale(1.1);}
+  }
+
+  .wordmark{
+    font-family:'Archivo Black', sans-serif;
+    font-size:52px;
+    line-height:0.86;
+    letter-spacing:-1px;
+    margin:0;
+    text-transform:uppercase;
+  }
+  .wordmark .bin{color:var(--paper);}
+  .wordmark .bros{color:var(--lime);}
+
+  .tagline{
+    margin:10px 0 0;
+    font-size:13px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:rgba(246,247,242,0.65);
+    font-weight:600;
+  }
+
+  .badges{
+    display:flex;
+    gap:14px;
+    margin-top:26px;
+    flex-wrap:wrap;
+  }
+  .meta-row{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+    flex-wrap:wrap;
+  }
+  .meta-pill{
+    background:rgba(155,208,51,0.12);
+    border:1px solid rgba(155,208,51,0.4);
+    color:var(--lime);
+    font-size:12.5px;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:999px;
+  }
+  .badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    color:rgba(246,247,242,0.85);
+  }
+  .badge .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--lime);
+    flex:none;
+  }
+
+  /* ---------- ACTIONS ---------- */
+  .actions{
+    padding:26px 24px 8px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:16px 18px;
+    border-radius:12px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .btn:active{transform:scale(0.98);}
+  .btn-primary{
+    background:var(--lime);
+    color:var(--navy-deep);
+  }
+  .btn-primary:hover{filter:brightness(1.06);}
+  .btn-secondary{
+    background:transparent;
+    color:var(--paper);
+    border:1.5px solid rgba(246,247,242,0.35);
+  }
+  .btn-secondary:hover{border-color:var(--lime); color:var(--lime);}
+
+  /* ---------- SECTION LABELS ---------- */
+  .section{
+    padding:22px 24px;
+  }
+  .section-label{
+    font-size:11px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--lime);
+    font-weight:700;
+    margin:0 0 14px;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px;}
+  .services li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    color:rgba(246,247,242,0.9);
+    line-height:1.4;
+  }
+  .check{
+    flex:none;
+    width:18px;height:18px;
+    border-radius:50%;
+    background:var(--lime);
+    color:var(--navy-deep);
+    font-size:12px;
+    font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    margin-top:1px;
+  }
+
+  /* ---------- PRICES ---------- */
+  .prices{
+    background:rgba(246,247,242,0.04);
+    border:1px solid rgba(246,247,242,0.1);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 18px;
+    border-bottom:1px solid rgba(246,247,242,0.08);
+    font-size:15px;
+  }
+  .price-row:last-child{border-bottom:none;}
+  .price-row .label{color:rgba(246,247,242,0.85); font-weight:500;}
+  .price-row .amount{color:var(--lime); font-family:'Archivo Black', sans-serif; font-size:19px;}
+  .price-row .amount-sm{color:rgba(246,247,242,0.5); font-size:12.5px; font-weight:600;}
+  .price-row.highlight{background:rgba(155,208,51,0.08);}
+  .cash-note{
+    margin:12px 2px 0;
+    font-size:12px;
+    color:rgba(246,247,242,0.55);
+    font-style:italic;
+  }
+
+  /* ---------- MONTHLY PLAN ---------- */
+  .monthly-card{
+    background:linear-gradient(135deg, rgba(155,208,51,0.16), rgba(155,208,51,0.04));
+    border:1px solid rgba(155,208,51,0.35);
+    border-radius:14px;
+    padding:20px;
+    text-align:center;
+  }
+  .monthly-price{
+    font-family:'Archivo Black', sans-serif;
+    font-size:36px;
+    color:var(--lime);
+    margin:0;
+  }
+  .monthly-price span{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:14px;
+    color:rgba(246,247,242,0.6);
+    font-weight:500;
+  }
+  .monthly-desc{
+    font-size:13px;
+    color:rgba(246,247,242,0.75);
+    margin:8px 0 16px;
+    line-height:1.4;
+  }
+  .monthly-section .btn{width:100%;}
+
+  /* ---------- PAYMENT ---------- */
+  .payment-pills{
+    display:flex;
+    gap:10px;
+  }
+  .payment-pill{
+    background:rgba(155,208,51,0.1);
+    border:1px solid rgba(155,208,51,0.3);
+    color:var(--paper);
+    font-size:14px;
+    font-weight:600;
+    padding:12px 18px;
+    border-radius:10px;
+  }
+
+  /* ---------- BOOKING FORM ---------- */
+  .booking-card{
+    background:rgba(246,247,242,0.04);
+    border:1px solid rgba(246,247,242,0.1);
+    border-radius:14px;
+    padding:20px;
+  }
+  .field-label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    color:rgba(246,247,242,0.6);
+    margin:16px 0 8px;
+  }
+  .field-label:first-child{margin-top:0;}
+  .option-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .option-btn{
+    background:rgba(246,247,242,0.06);
+    border:1.5px solid rgba(246,247,242,0.15);
+    color:rgba(246,247,242,0.8);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    padding:10px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .option-btn.active{
+    background:var(--lime);
+    border-color:var(--lime);
+    color:var(--navy-deep);
+  }
+  .text-input{
+    width:100%;
+    background:rgba(246,247,242,0.06);
+    border:1.5px solid rgba(246,247,242,0.15);
+    color:var(--paper);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:14px;
+    padding:12px 14px;
+    border-radius:9px;
+  }
+  .text-input::placeholder{color:rgba(246,247,242,0.35);}
+  .text-input:focus{outline:none; border-color:var(--lime);}
+  .total-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:22px 0 16px;
+    padding-top:16px;
+    border-top:1px dashed rgba(246,247,242,0.2);
+  }
+  .total-row span:first-child{font-size:14px; color:rgba(246,247,242,0.7); font-weight:600;}
+  .total-amount{
+    font-family:'Archivo Black', sans-serif;
+    font-size:28px;
+    color:var(--lime);
+  }
+  #onceOffOptions.hidden{display:none;}
+
+  /* ---------- SOCIALS ---------- */
+  .socials{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .social-pill{
+    background:rgba(246,247,242,0.04);
+    border:1px dashed rgba(246,247,242,0.25);
+    color:rgba(246,247,242,0.6);
+    font-size:13.5px;
+    font-weight:500;
+    padding:12px 16px;
+    border-radius:10px;
+  }
+
+  /* ---------- CONTACT FOOTER ---------- */
+  .footer{
+    background:var(--navy-deep);
+    padding:26px 24px 40px;
+    border-top:3px solid var(--lime);
+  }
+  .phone-line{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:22px;
+    font-weight:700;
+    color:var(--paper);
+    text-decoration:none;
+  }
+  .phone-line-secondary{
+    margin-top:12px;
+    color:rgba(246,247,242,0.75);
+  }
+  .phone-line .icon{
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--lime);
+    display:flex;align-items:center;justify-content:center;
+    flex:none;
+  }
+  .footer-tag{
+    margin-top:16px;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:rgba(246,247,242,0.5);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="hero">
+    <div class="droplet" style="left:20%; width:5px; height:5px; animation-delay:.2s;"></div>
+    <div class="droplet" style="left:55%; width:4px; height:4px; animation-delay:1s;"></div>
+    <div class="droplet" style="left:78%; width:6px; height:6px; animation-delay:.6s;"></div>
+    <div class="droplet" style="left:38%; width:3px; height:3px; animation-delay:1.6s;"></div>
+
+    <h1 class="wordmark"><span class="bin">Bin</span><br><span class="bros">Bros</span></h1>
+    <p class="tagline">Fresh Bins. Happy Homes.</p>
+
+    <div class="badges">
+      <div class="badge"><span class="dot"></span>Residential only</div>
+      <div class="badge"><span class="dot"></span>Kills 99.9% of germs</div>
+      <div class="badge"><span class="dot"></span>Eco friendly</div>
+    </div>
+
+    <div class="meta-row">
+      <div class="meta-pill">📍 Kalkallo, VIC</div>
+      <div class="meta-pill">🗓 Weekends 10am–4pm</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="saveContact()">＋ Save to Contacts</button>
+    <a class="btn btn-secondary" href="tel:0451666162">Call 0451 666 162</a>
+    <a class="btn btn-secondary" href="tel:0480645874">Call 0480 645 874</a>
+    <a class="btn btn-secondary" href="mailto:binbros3064@gmail.com">Email binbros3064@gmail.com</a>
+  </div>
+
+  <div class="section">
+    <p class="section-label">What we do</p>
+    <ul class="services">
+      <li><span class="check">✓</span>High pressure water cleaning</li>
+      <li><span class="check">✓</span>Kills bacteria and eliminates odours</li>
+      <li><span class="check">✓</span>Eco-friendly products, safe for family &amp; pets</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <p class="section-label">🗑 Garbage Bin (Red Lid)</p>
+    <div class="prices">
+      <div class="price-row"><span class="label">80L bin</span><span class="amount">$25</span></div>
+      <div class="price-row"><span class="label">140L bin</span><span class="amount">$25</span></div>
+      <div class="price-row highlight"><span class="label">2 garbage bins together</span><span class="amount">$45</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">♻️ Recycling Bin (Yellow Lid)</p>
+    <div class="prices">
+      <div class="price-row"><span class="label">140L bin</span><span class="amount">$20</span></div>
+      <div class="price-row"><span class="label">240L bin</span><span class="amount">$25</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Combo Deal</p>
+    <div class="prices">
+      <div class="price-row highlight"><span class="label">1 garbage + 1 recycling</span><span class="amount">$35</span></div>
+    </div>
+    <p class="cash-note">Combo price is for standard sizes (80L/140L garbage + 140L recycling). Add $5 if the recycling bin is 240L.</p>
+  </div>
+
+  <div class="section payment-section">
+    <p class="section-label">Payment</p>
+    <div class="payment-pills">
+      <div class="payment-pill">💵 Cash</div>
+      <div class="payment-pill">📱 PayID</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Add-On</p>
+    <div class="prices">
+      <div class="price-row"><span class="label">🧼 Heavily soiled bin surcharge</span><span class="amount">+$5</span></div>
+    </div>
+    <p class="cash-note">Sanitisation is included in every wash. This only applies if the bin is extra dirty and needs more time.</p>
+  </div>
+
+  <div class="section monthly-section">
+    <p class="section-label">Monthly Service</p>
+    <div class="monthly-card">
+      <p class="monthly-price">$130<span>/month</span></p>
+      <p class="monthly-desc">Weekly wash for both bins — set and forget, fresh bins every week.</p>
+      <a class="btn btn-primary" href="tel:0451666162">Interested? Book it in →</a>
+    </div>
+  </div>
+
+  <div class="section booking-section">
+    <p class="section-label">📋 Book a Clean</p>
+    <div class="booking-card">
+
+      <label class="field-label">Service type</label>
+      <div class="option-row" id="serviceTypeRow">
+        <button type="button" class="option-btn active" data-service="onceoff">One-off clean</button>
+        <button type="button" class="option-btn" data-service="monthly">Monthly plan</button>
+      </div>
+
+      <div id="onceOffOptions">
+        <label class="field-label">Garbage bins (red lid)</label>
+        <div class="option-row" id="garbageRow">
+          <button type="button" class="option-btn active" data-garbage="0">None</button>
+          <button type="button" class="option-btn" data-garbage="1" data-size="80L">1 bin (80L)</button>
+          <button type="button" class="option-btn" data-garbage="1" data-size="140L">1 bin (140L)</button>
+          <button type="button" class="option-btn" data-garbage="2">2 bins</button>
+        </div>
+
+        <label class="field-label">Recycling bin (yellow lid)</label>
+        <div class="option-row" id="recyclingRow">
+          <button type="button" class="option-btn active" data-recycling="none">None</button>
+          <button type="button" class="option-btn" data-recycling="140">140L</button>
+          <button type="button" class="option-btn" data-recycling="240">240L</button>
+        </div>
+
+        <label class="field-label">Bin condition</label>
+        <div class="option-row" id="soiledRow">
+          <button type="button" class="option-btn active" data-soiled="0">Normal</button>
+          <button type="button" class="option-btn" data-soiled="1">Heavily soiled (+$5)</button>
+        </div>
+      </div>
+
+      <label class="field-label">Your name</label>
+      <input type="text" id="custName" class="text-input" placeholder="Full name">
+
+      <label class="field-label">Address / suburb</label>
+      <input type="text" id="custAddress" class="text-input" placeholder="e.g. 12 Smith St, Kalkallo">
+
+      <label class="field-label">Payment method</label>
+      <div class="option-row" id="paymentRow">
+        <button type="button" class="option-btn active" data-payment="Cash">💵 Cash</button>
+        <button type="button" class="option-btn" data-payment="PayID">📱 PayID</button>
+      </div>
+
+      <div class="total-row">
+        <span>Estimated total</span>
+        <span class="total-amount" id="totalAmount">$0</span>
+      </div>
+
+      <button class="btn btn-primary" id="bookBtn" onclick="sendBooking()">Request Booking →</button>
+      <p class="cash-note">Tapping "Request Booking" opens a text message to Bin Bros with your details — nothing is charged here.</p>
+    </div>
+  </div>
+
+  <div class="section social-section">
+    <p class="section-label">Follow Along</p>
+    <div class="socials">
+      <div class="social-pill">📸 Instagram — coming soon</div>
+      <div class="social-pill">🎵 TikTok — coming soon</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a class="phone-line" href="tel:0451666162">
+      <span class="icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.49a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.25 1.01l-2.2 2.21z" fill="#0d1b2a"/>
+        </svg>
+      </span>
+      0451 666 162
+    </a>
+    <a class="phone-line phone-line-secondary" href="tel:0480645874">
+      <span class="icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.49a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.25 1.01l-2.2 2.21z" fill="#0d1b2a"/>
+        </svg>
+      </span>
+      0480 645 874
+    </a>
+    <p class="footer-tag">Clean bins. Cleaner living.</p>
+  </div>
+
+</div>
+
+<script>
+function saveContact(){
+  const vcard = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    "FN:Bin Bros",
+    "ORG:Bin Bros",
+    "TEL;TYPE=CELL:0451666162",
+    "TEL;TYPE=CELL:0480645874",
+    "NOTE:Fresh Bins. Happy Homes. Residential only. Servicing Kalkallo VIC. Weekends 10am-4pm. Garbage bin (80L or 140L) \\$25, 2 garbage bins \\$45. Recycling bin 140L \\$20, 240L \\$25. Combo 1 garbage+1 recycling \\$35 (+\\$5 if recycling is 240L). Sanitisation included; +\\$5 surcharge for heavily soiled bins. Monthly plan \\$130/month. Payment: cash or PayID.",
+    "END:VCARD"
+  ].join("\n");
+
+  const blob = new Blob([vcard], { type: "text/vcard" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Bin-Bros.vcf";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ---------- BOOKING FORM ---------- */
+let bookingState = {
+  service: "onceoff",
+  garbage: 0,
+  garbageSize: "",
+  recycling: "none",
+  soiled: 0,
+  payment: "Cash"
+};
+
+function setActive(row, btn){
+  row.querySelectorAll(".option-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+document.getElementById("serviceTypeRow").addEventListener("click", e => {
+  const btn = e.target.closest(".option-btn");
+  if(!btn) return;
+  setActive(document.getElementById("serviceTypeRow"), btn);
+  bookingState.service = btn.dataset.service;
+  document.getElementById("onceOffOptions").classList.toggle("hidden", bookingState.service === "monthly");
+  updateTotal();
+});
+
+document.getElementById("garbageRow").addEventListener("click", e => {
+  const btn = e.target.closest(".option-btn");
+  if(!btn) return;
+  setActive(document.getElementById("garbageRow"), btn);
+  bookingState.garbage = parseInt(btn.dataset.garbage, 10);
+  bookingState.garbageSize = btn.dataset.size || "";
+  updateTotal();
+});
+
+document.getElementById("recyclingRow").addEventListener("click", e => {
+  const btn = e.target.closest(".option-btn");
+  if(!btn) return;
+  setActive(document.getElementById("recyclingRow"), btn);
+  bookingState.recycling = btn.dataset.recycling;
+  updateTotal();
+});
+
+document.getElementById("soiledRow").addEventListener("click", e => {
+  const btn = e.target.closest(".option-btn");
+  if(!btn) return;
+  setActive(document.getElementById("soiledRow"), btn);
+  bookingState.soiled = parseInt(btn.dataset.soiled, 10);
+  updateTotal();
+});
+
+document.getElementById("paymentRow").addEventListener("click", e => {
+  const btn = e.target.closest(".option-btn");
+  if(!btn) return;
+  setActive(document.getElementById("paymentRow"), btn);
+  bookingState.payment = btn.dataset.payment;
+});
+
+function calcTotal(){
+  if(bookingState.service === "monthly"){
+    return 130;
+  }
+  let total = 0;
+  const g = bookingState.garbage;
+  const r = bookingState.recycling;
+
+  if(g === 1 && r !== "none"){
+    total = 35 + (r === "240" ? 5 : 0);
+  } else {
+    if(g === 1) total += 25;
+    if(g === 2) total += 45;
+    if(r === "140") total += 20;
+    if(r === "240") total += 25;
+  }
+  if(bookingState.soiled === 1) total += 5;
+  return total;
+}
+
+function updateTotal(){
+  document.getElementById("totalAmount").textContent = "$" + calcTotal();
+}
+
+function sendBooking(){
+  const name = document.getElementById("custName").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
+  const total = calcTotal();
+
+  let details = [];
+  if(bookingState.service === "monthly"){
+    details.push("Monthly plan (weekly, both bins)");
+  } else {
+    if(bookingState.garbage > 0){
+      const sizeLabel = bookingState.garbageSize ? " (" + bookingState.garbageSize + ")" : "";
+      details.push(bookingState.garbage + " garbage bin(s)" + sizeLabel);
+    }
+    if(bookingState.recycling !== "none") details.push("Recycling bin " + bookingState.recycling + "L");
+    if(bookingState.soiled === 1) details.push("Heavily soiled surcharge");
+  }
+
+  const msg =
+    "Hi Bin Bros, I'd like to book a clean.\n" +
+    "Name: " + (name || "-") + "\n" +
+    "Address: " + (address || "-") + "\n" +
+    "Service: " + details.join(", ") + "\n" +
+    "Payment: " + bookingState.payment + "\n" +
+    "Estimated total: $" + total;
+
+  const smsUrl = "sms:0451666162?body=" + encodeURIComponent(msg);
+  window.location.href = smsUrl;
+}
+
+updateTotal();
+</script>
+
+</body>
+</html>
